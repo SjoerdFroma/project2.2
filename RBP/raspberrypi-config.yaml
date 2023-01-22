@@ -2,6 +2,7 @@
 # This script automatically configures and updates the Raspberry pi with Ansible
 ---
 - hosts: raspberry
+  becom: true
   gather_facts: no
   remote_user: Admin
   tasks:
@@ -15,10 +16,7 @@
           - curl
           - wget
           - vim
-          - nodejs
-
-    - name: Ansible shell module multiple commands
-      shell: 'bash <(curl -sL https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered)'      
+          - nodejs   
 
     - name: "reset cron"
       shell: "crontab -r || echo already clean"
