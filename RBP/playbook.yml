@@ -1,5 +1,4 @@
-# 
-
+# Run with `ansible-playbook ~/playbook.yaml`
 ---
 
 - hosts: all
@@ -40,3 +39,7 @@
         group: www-data
 
         mode: '0644'
+
+      tags: [ 'update', 'sync' ]
+
+      
