@@ -1,0 +1,137 @@
+# Run with `ansible-playbook ~/raspberrypi-config.yaml`
+# This script automatically configures and updates the Raspberry pi with Ansible
+
+- hosts: raspberry
+  gather_facts: no
+  remote_user: root
+  tasks:
+    - name: Install packages
+      apt:
+        update_cache: yes
+        autoremove: yes
+        state: present
+        pkg:
+          - samba
+          - samba-common-bin
+          - smbclient
+          - python-mako
+          - vim
+
+    - name: "reset cron"
+      shell: "crontab -r || echo already clean"
+      tags: [ cron ]
+
+    - file: { path: /ext-disk, state: directory }
+      tags: [ disk ]
+
+    - name: '/etc/fstab'
+      lineinfile:
+        path: /etc/fstab
+        line: 'UUID=240A-1CED  /ext-disk  vfat   auto,nofail,noatime,rw,exec,uid=plex,gid=plex,nouser,async  0 0'
+        regexp: ^.*\/ext-disk
+      register: fstab
+      tags: [ disk, fstab ]
+
+    - name: audio off
+      lineinfile:
+        path: /boot/config.txt
+        line: 'dtparam=audio=off'
+        state: present
+      tags: [ audio ]
+
+    - name: static ip
+      copy:
+        dest: /etc/dhcpcd.conf
+        owner: root
+        group: root
+        mode: 0664
+        content: |
+          hostname
+          clientid
+          persistent
+          option rapid_commit
+          option domain_name_servers, domain_name, domain_search, host_name
+          option classless_static_routes
+          option interface_mtu
+          require dhcp_server_identifier
+          slaac private
+          interface wlan0
+          static ip_address=192.168.0.14/24
+          static routers=192.168.0.1
+          static domain_name_servers=8.8.8.8
+      tags: [ network ]
+
+    - name: samba config
+      blockinfile:
+        path: /etc/samba/smb.conf
+        block: |
+          [Films]
+          path = /ext-disk
+          read only = no
+          public = no
+          writable = yes
+          create mask=0644
+          directory mark=0755
+          force user = root
+          [pi]
+          path = /home/pi
+          read only = no
+          public = no
+          writable = yes
+          create mask=0644
+          directory mark=0755
+          force user = root
+      notify:
+        - restart samba
+      tags: [ samba ]
+
+    - name: "authorise SSH key mac 13 e 15"
+      copy:
+        dest: /root/.ssh/authorized_keys
+        content: |
+          ssh-rsa copy me from your local ~/.ssh/id_rsa.pub
+          ssh-rsa copy me from your local ~/.ssh/id_rsa.pub
+          ssh-rsa copy me from your local ~/.ssh/id_rsa.pub
+      tags: [ ssh ]
+
+    - cron:
+        name: "shutdown wifi at startup time"
+        special_time: reboot
+        user: root
+        job: "ifdown wlan0; ifconfig wlan0 down"
+        state: present
+      tags: [ cron ]
+
+    - cron:
+        name: "shutdown at 2am"
+        minute: "0"
+        hour: "2"
+        user: root
+        job: "/sbin/shutdown -P now"
+      tags: [ cron ]
+
+    - cron:
+        name: "every month at 1am launch raspi-clean-and-update.sh"
+        minute: "0"
+        hour: "1"
+        day: 1
+        user: root
+        job: "/bin/sh /usr/local/bin/raspi-clean-and-update.sh"
+      tags: [ cron ]
+
+    - name: "maintenance script to delete logs, update dist upgrade"
+      copy:
+        dest: /usr/local/bin/raspi-clean-and-update.sh
+        content: |
+          set -x
+          find /var/log -name '*.gz' | xargs rm -f {}
+          find /var/log -type f | xargs cat /dev/null > {}
+          apt update -y
+          apt autoremove
+          apt upgrade -y
+          apt dist-upgrade -y
+      tags: [ cron ]
+
+  handlers:
+    - name: restart samba
+      command: service smbd restart
