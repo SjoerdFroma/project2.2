@@ -2,11 +2,12 @@
 #include <WebServer.h>
 #include <ArduinoJson.h>
 #include "secret.h"
+#include <Wire.h>
  
 #include <Adafruit_BME280.h>
 #include <Adafruit_Sensor.h>
 
-#define PIN 4
+//#define PIN 4
  
 // Web server running on port 80
 WebServer server(80);
@@ -65,9 +66,10 @@ void read_sensor_data(void * parameter) {
      humidity = bme.readHumidity();
      pressure = bme.readPressure() / 100;
      Serial.println("Read sensor data");
+     Serial.println(temperature);
  
      // delay the task
-     vTaskDelay(60000 / portTICK_PERIOD_MS);
+     vTaskDelay(6000 / portTICK_PERIOD_MS);
 
    }
 }
@@ -126,11 +128,13 @@ void setup_task() {
 }
  
 void setup() {
+   bme.begin(0x76);
    Serial.begin(9600);
  
    // Sensor setup
   if (!bme.begin(0x76)) {
     Serial.println("Problem connecting to BME280");
+
   }
   connectToWiFi();
   setup_task();
