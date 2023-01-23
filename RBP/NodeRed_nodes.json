@@ -1,0 +1,251 @@
+[
+    {
+        "id": "647ae602f0d64ff8",
+        "type": "http request",
+        "z": "fc82c8d71e7bca21",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://192.168.137.22/env",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "credentials": {},
+        "x": 290,
+        "y": 160,
+        "wires": [
+            [
+                "09290f4acc0c5670"
+            ]
+        ]
+    },
+    {
+        "id": "fef8fadbf4336e81",
+        "type": "ui_button",
+        "z": "fc82c8d71e7bca21",
+        "name": "",
+        "group": "46097c7c.c45094",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Refresh",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "x": 90,
+        "y": 160,
+        "wires": [
+            [
+                "647ae602f0d64ff8"
+            ]
+        ]
+    },
+    {
+        "id": "d5e0c8ec5ebeafcd",
+        "type": "ui_gauge",
+        "z": "fc82c8d71e7bca21",
+        "name": "",
+        "group": "46097c7c.c45094",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "-10",
+        "max": "40",
+        "colors": [
+            "#0096ff",
+            "#00f900",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 850,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "71764f5bcc4e82fe",
+        "type": "change",
+        "z": "fc82c8d71e7bca21",
+        "name": "Temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 240,
+        "wires": [
+            [
+                "d5e0c8ec5ebeafcd"
+            ]
+        ]
+    },
+    {
+        "id": "97d55641a252086f",
+        "type": "change",
+        "z": "fc82c8d71e7bca21",
+        "name": "Humidity",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[1].value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 320,
+        "wires": [
+            [
+                "fb6cdd74d99bc669"
+            ]
+        ]
+    },
+    {
+        "id": "e0e6c5e5bbe33429",
+        "type": "change",
+        "z": "fc82c8d71e7bca21",
+        "name": "Pressure",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[2].value",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 400,
+        "wires": [
+            [
+                "2f1f1af72591e0bb"
+            ]
+        ]
+    },
+    {
+        "id": "2f1f1af72591e0bb",
+        "type": "ui_gauge",
+        "z": "fc82c8d71e7bca21",
+        "name": "",
+        "group": "46097c7c.c45094",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Pressure",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "600",
+        "max": "1200",
+        "colors": [
+            "#929292",
+            "#00f900",
+            "#fffb00"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 870,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "09290f4acc0c5670",
+        "type": "json",
+        "z": "fc82c8d71e7bca21",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 310,
+        "y": 260,
+        "wires": [
+            [
+                "e0e6c5e5bbe33429",
+                "97d55641a252086f",
+                "71764f5bcc4e82fe"
+            ]
+        ]
+    },
+    {
+        "id": "fb6cdd74d99bc669",
+        "type": "ui_gauge",
+        "z": "fc82c8d71e7bca21",
+        "name": "",
+        "group": "46097c7c.c45094",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#0096ff",
+            "#00f900",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 860,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "46097c7c.c45094",
+        "type": "ui_group",
+        "name": "Environment",
+        "tab": "29a564f0.c41aac",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "29a564f0.c41aac",
+        "type": "ui_tab",
+        "name": "Environment",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]
