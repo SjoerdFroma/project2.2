@@ -4,6 +4,7 @@
 #include "secret.h"
  
 #include <Adafruit_BME280.h>
+#include <Adafruit_Sensor.h>
 
 #define PIN 4
  
@@ -38,6 +39,7 @@ void connectToWiFi() {
  
   Serial.print("Connected. IP: ");
   Serial.println(WiFi.localIP());
+
 }
  
 void create_json(char *tag, float value, char *unit) { 
@@ -66,6 +68,7 @@ void read_sensor_data(void * parameter) {
  
      // delay the task
      vTaskDelay(60000 / portTICK_PERIOD_MS);
+
    }
 }
  
@@ -115,7 +118,7 @@ void setup_task() {
   xTaskCreate(
     read_sensor_data,    
     "Read sensor data",   // Name of the task (for debugging)
-    1000,            // Stack size (bytes)
+    4096,            // Stack size (bytes)
     NULL,            // Parameter to pass
     1,               // Task priority
     NULL             // Task handle
@@ -128,7 +131,7 @@ void setup() {
    // Sensor setup
   if (!bme.begin(0x76)) {
     Serial.println("Problem connecting to BME280");
-  }S
+  }
   connectToWiFi();
   setup_task();
   setup_routing();  
@@ -138,5 +141,6 @@ void setup() {
  
 void loop() {
   server.handleClient();
+
  
 }
