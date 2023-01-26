@@ -2,7 +2,7 @@
 # This script automatically configures and updates the Raspberry pi with Ansible
 ---
 - hosts: raspberry
-  becom: true
+  become: true
   gather_facts: no
   remote_user: Admin
   tasks:
@@ -16,7 +16,13 @@
           - curl
           - wget
           - vim
-          - nodejs   
+          - nodejs 
+          - net-tools  
+
+    - name: Install PM2
+      npm:
+        name: pm2
+        global: yes
 
     - name: "reset cron"
       shell: "crontab -r || echo already clean"
