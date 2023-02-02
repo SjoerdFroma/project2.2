@@ -8,7 +8,7 @@
 #include <Adafruit_Sensor.h>
 
 
-#define NODE_RED_IP "192.168.137.182"
+#define NODE_RED_IP "192.168.137.1"
 #define NODE_RED_PORT 49152
 
 Adafruit_BME280 bme;
@@ -17,6 +17,10 @@ Adafruit_BME280 bme;
 float temperature;
 float humidity;
 float pressure;
+
+float floatMap(float x, float in_min, float in_max, float out_min, float out_max) {
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 
 
 void WiFi_connect(void* parameter){
@@ -39,32 +43,21 @@ void udp_json_task(void *pvParameters)
 
     while (1) {
 
+
       temperature = bme.readTemperature();
       humidity = bme.readHumidity();
       pressure = bme.readPressure() / 100;
-
+      int node = 1;
+      int analogValue = analogRead(4);
+      int stifness = floatMap(analogValue, 0, 4095, 0, 100);
       cJSON *root = cJSON_CreateObject();
-      
-      cJSON *temp = cJSON_CreateObject();
-      cJSON_AddStringToObject(temp, "Type", "temperature");
-      cJSON_AddStringToObject(temp, "Symb", "°C");
-      cJSON_AddNumberToObject(temp, "Type", temperature);
-
-      cJSON *hum = cJSON_CreateObject();
-      cJSON_AddStringToObject(hum, "Type", "humidity");
-      cJSON_AddStringToObject(hum, "Symb", "%");
-      cJSON_AddNumberToObject(hum, "Type", humidity);
-
-      cJSON *pres = cJSON_CreateObject();
-      cJSON_AddStringToObject(pres, "Type", "pressure");
-      cJSON_AddStringToObject(pres, "Symb", "mBar");
-      cJSON_AddNumberToObject(pres, "Type", pressure);
-
-      cJSON_AddItemToObject(root, "temp", temp);
-      cJSON_AddItemToObject(root, "hum", hum);
-      cJSON_AddItemToObject(root, "pres", pres);
-
+      cJSON_AddNumberToObject(root, "node", node);
+      cJSON_AddNumberToObject(root, "temp", temperature);
+      cJSON_AddNumberToObject(root, "hum", humidity);
+      cJSON_AddNumberToObject(root, "pres", pressure);
+      cJSON_AddNumberToObject(root, "stretch", stifness);
       char *json_string = cJSON_PrintUnformatted(root);
+      Serial.println(sizeof(json_string));
 
       udp.beginPacket(NODE_RED_IP, NODE_RED_PORT);
       udp.write((const uint8_t *)json_string, strlen(json_string));
