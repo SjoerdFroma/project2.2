@@ -1,214 +1,282 @@
 [
     {
-        "id": "647ae602f0d64ff8",
-        "type": "http request",
-        "z": "fc82c8d71e7bca21",
-        "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "paytoqs": "ignore",
-        "url": "http://192.168.137.22/env",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "insecureHTTPParser": false,
-        "authType": "",
-        "senderr": false,
-        "headers": [],
-        "credentials": {},
-        "x": 290,
-        "y": 160,
-        "wires": [
-            [
-                "09290f4acc0c5670"
-            ]
-        ]
+        "id": "f6f2187d.f17ca8",
+        "type": "tab",
+        "label": "Sensor",
+        "disabled": false,
+        "info": ""
     },
     {
-        "id": "fef8fadbf4336e81",
-        "type": "ui_button",
-        "z": "fc82c8d71e7bca21",
-        "name": "",
-        "group": "46097c7c.c45094",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "passthru": false,
-        "label": "Refresh",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "",
-        "icon": "",
-        "payload": "",
-        "payloadType": "str",
-        "topic": "",
-        "x": 90,
-        "y": 160,
-        "wires": [
-            [
-                "647ae602f0d64ff8"
-            ]
-        ]
+        "id": "eab2a9b4a454c754",
+        "type": "tab",
+        "label": "Daily file upload",
+        "disabled": false,
+        "info": "",
+        "env": []
     },
     {
-        "id": "d5e0c8ec5ebeafcd",
-        "type": "ui_gauge",
-        "z": "fc82c8d71e7bca21",
-        "name": "",
-        "group": "46097c7c.c45094",
+        "id": "e562a4a.39a9e58",
+        "type": "ui_tab",
+        "name": "ESP32 Sensor Data",
+        "icon": "dashboard",
         "order": 1,
-        "width": 0,
-        "height": 0,
-        "gtype": "gage",
-        "title": "gauge",
-        "label": "units",
-        "format": "{{value}}",
-        "min": "-10",
-        "max": "40",
-        "colors": [
-            "#0096ff",
-            "#00f900",
-            "#ca3838"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "diff": false,
-        "className": "",
-        "x": 850,
-        "y": 240,
-        "wires": []
+        "disabled": false,
+        "hidden": false
     },
     {
-        "id": "71764f5bcc4e82fe",
-        "type": "change",
-        "z": "fc82c8d71e7bca21",
-        "name": "Temperature",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload[0].value",
-                "tot": "msg"
+        "id": "b3368381aff913c0",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-dark",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#097479",
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#0eb8c0",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
             }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 670,
-        "y": 240,
-        "wires": [
-            [
-                "d5e0c8ec5ebeafcd"
-            ]
-        ]
-    },
-    {
-        "id": "97d55641a252086f",
-        "type": "change",
-        "z": "fc82c8d71e7bca21",
-        "name": "Humidity",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload[1].value",
-                "tot": "msg"
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
             }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 660,
-        "y": 320,
-        "wires": [
-            [
-                "fb6cdd74d99bc669"
-            ]
-        ]
+        }
     },
     {
-        "id": "e0e6c5e5bbe33429",
-        "type": "change",
-        "z": "fc82c8d71e7bca21",
-        "name": "Pressure",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "payload[2].value",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 660,
-        "y": 400,
-        "wires": [
-            [
-                "2f1f1af72591e0bb"
-            ]
-        ]
+        "id": "f00630a9f4787083",
+        "type": "ui_group",
+        "name": "ESP32 node (Jacket1)",
+        "tab": "e562a4a.39a9e58",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
-        "id": "2f1f1af72591e0bb",
-        "type": "ui_gauge",
-        "z": "fc82c8d71e7bca21",
-        "name": "",
-        "group": "46097c7c.c45094",
+        "id": "ec87f89e0f9cd52f",
+        "type": "ui_group",
+        "name": "ESP32 node (Jacket2)",
+        "tab": "e562a4a.39a9e58",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3e0b6598fd1203b0",
+        "type": "ui_group",
+        "name": "ESP32 node (Jacket3)",
+        "tab": "e562a4a.39a9e58",
         "order": 3,
-        "width": 0,
-        "height": 0,
-        "gtype": "donut",
-        "title": "Pressure",
-        "label": "units",
-        "format": "{{value}}",
-        "min": "600",
-        "max": "1200",
-        "colors": [
-            "#929292",
-            "#00f900",
-            "#fffb00"
-        ],
-        "seg1": "",
-        "seg2": "",
-        "x": 870,
-        "y": 400,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "28652acf750469cf",
+        "type": "ui_tab",
+        "name": "ESP32 Stretch Data",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ef983b97d325fda8",
+        "type": "ui_group",
+        "name": "ESP32 node (Jacket1)",
+        "tab": "28652acf750469cf",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4ea517274771a3e9",
+        "type": "ui_group",
+        "name": "ESP32 node (Jacket2)",
+        "tab": "28652acf750469cf",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "beb928088366b8f5",
+        "type": "ui_group",
+        "name": "ESP32 node (Jacket3)",
+        "tab": "28652acf750469cf",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "3cc11d24.ff01a2",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "WARNING: please check you have started this container with a volume that is mounted to /data\\n otherwise any flow changes are lost when you redeploy or upgrade the container\\n (e.g. upgrade to a more recent node-red docker image).\\n  If you are using named volumes you can ignore this warning.\\n Double click or see info side panel to learn how to start Node-RED in Docker to save your work",
+        "info": "\nTo start docker with a bind mount volume (-v option), for example:\n\n```\ndocker run -it -p 1880:1880 -v /home/user/node_red_data:/data --name mynodered nodered/node-red\n```\n\nwhere `/home/user/node_red_data` is a directory on your host machine where you want to store your flows.\n\nIf you do not do this then you can experiment and redploy flows, but if you restart or upgrade the container the flows will be disconnected and lost. \n\nThey will still exist in a hidden data volume, which can be recovered using standard docker techniques, but that is much more complex than just starting with a named volume as described above.",
+        "x": 350,
+        "y": 80,
         "wires": []
     },
     {
-        "id": "09290f4acc0c5670",
+        "id": "20e88339df9beb70",
+        "type": "udp in",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "iface": "",
+        "port": "49152",
+        "ipv": "udp4",
+        "multicast": "false",
+        "group": "",
+        "datatype": "utf8",
+        "x": 280,
+        "y": 340,
+        "wires": [
+            [
+                "6dc0e7a530d6658a",
+                "62249ad7a68ab01c"
+            ]
+        ]
+    },
+    {
+        "id": "6dc0e7a530d6658a",
         "type": "json",
-        "z": "fc82c8d71e7bca21",
+        "z": "f6f2187d.f17ca8",
         "name": "",
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 310,
-        "y": 260,
+        "x": 530,
+        "y": 340,
         "wires": [
             [
-                "e0e6c5e5bbe33429",
-                "97d55641a252086f",
-                "71764f5bcc4e82fe"
+                "62249ad7a68ab01c",
+                "960259dcfb8427dc",
+                "3eb8f56fb256519a",
+                "e52d7978f986fbe8",
+                "42094d6d3dc92c81",
+                "20e52450f1179bfd",
+                "f62e595faaa660bf",
+                "47834aa1faafd50f",
+                "71cbd2d6b0507427",
+                "67680fc58c4c7311",
+                "4911ef9e2026c030",
+                "7e3bab9bb79fa9e2",
+                "20c0f2416e53a604"
             ]
         ]
     },
     {
-        "id": "fb6cdd74d99bc669",
+        "id": "62249ad7a68ab01c",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "483ffaef51cb7b9a",
         "type": "ui_gauge",
-        "z": "fc82c8d71e7bca21",
+        "z": "f6f2187d.f17ca8",
         "name": "",
-        "group": "46097c7c.c45094",
+        "group": "f00630a9f4787083",
         "order": 2,
         "width": 0,
         "height": 0,
@@ -225,27 +293,1119 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 860,
+        "diff": false,
+        "className": "",
+        "x": 1080,
         "y": 320,
         "wires": []
     },
     {
-        "id": "46097c7c.c45094",
-        "type": "ui_group",
-        "name": "Environment",
-        "tab": "29a564f0.c41aac",
-        "order": 2,
-        "disp": true,
-        "width": "6",
-        "collapse": false
+        "id": "b0842e8eabe9d28c",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "f00630a9f4787083",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Pressure",
+        "label": "mBar",
+        "format": "{{value|number:2}}",
+        "min": "600",
+        "max": "1200",
+        "colors": [
+            "#929292",
+            "#00f900",
+            "#fffb00"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1080,
+        "y": 380,
+        "wires": []
     },
     {
-        "id": "29a564f0.c41aac",
-        "type": "ui_tab",
-        "name": "Environment",
-        "icon": "dashboard",
+        "id": "960259dcfb8427dc",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.temp.Type",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 870,
+        "y": 260,
+        "wires": [
+            [
+                "9b34e09f18557b42"
+            ]
+        ]
+    },
+    {
+        "id": "3eb8f56fb256519a",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Humidity",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.hum.Type",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 320,
+        "wires": [
+            [
+                "483ffaef51cb7b9a"
+            ]
+        ]
+    },
+    {
+        "id": "e52d7978f986fbe8",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Pressure",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.pres.Type",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 380,
+        "wires": [
+            [
+                "b0842e8eabe9d28c"
+            ]
+        ]
+    },
+    {
+        "id": "9b34e09f18557b42",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "f00630a9f4787083",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "°C",
+        "format": "{{value|number:2}}",
+        "min": "-10",
+        "max": "40",
+        "colors": [
+            "#0096ff",
+            "#00f900",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1070,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "6444e6704594b051",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "ec87f89e0f9cd52f",
         "order": 2,
-        "disabled": false,
-        "hidden": false
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#0096ff",
+            "#00f900",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1140,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "76db8016bdaa85ff",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "ec87f89e0f9cd52f",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Pressure",
+        "label": "mBar",
+        "format": "{{value|number:2}}",
+        "min": "600",
+        "max": "1200",
+        "colors": [
+            "#929292",
+            "#00f900",
+            "#fffb00"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1140,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "42094d6d3dc92c81",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 930,
+        "y": 460,
+        "wires": [
+            [
+                "c43122967b76aecf"
+            ]
+        ]
+    },
+    {
+        "id": "20e52450f1179bfd",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Humidity",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 520,
+        "wires": [
+            [
+                "6444e6704594b051"
+            ]
+        ]
+    },
+    {
+        "id": "f62e595faaa660bf",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Pressure",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 580,
+        "wires": [
+            [
+                "76db8016bdaa85ff"
+            ]
+        ]
+    },
+    {
+        "id": "c43122967b76aecf",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "ec87f89e0f9cd52f",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "°C",
+        "format": "{{value|number:2}}",
+        "min": "-10",
+        "max": "40",
+        "colors": [
+            "#0096ff",
+            "#00f900",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1130,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "ea0713e679de4c50",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "3e0b6598fd1203b0",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#0096ff",
+            "#00f900",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1080,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "1f9bcc8a91a9c650",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "3e0b6598fd1203b0",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Pressure",
+        "label": "mBar",
+        "format": "{{value|number:2}}",
+        "min": "600",
+        "max": "1200",
+        "colors": [
+            "#929292",
+            "#00f900",
+            "#fffb00"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1080,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "47834aa1faafd50f",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 870,
+        "y": 660,
+        "wires": [
+            [
+                "5cb82b4b12a12833"
+            ]
+        ]
+    },
+    {
+        "id": "71cbd2d6b0507427",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Humidity",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 720,
+        "wires": [
+            [
+                "ea0713e679de4c50"
+            ]
+        ]
+    },
+    {
+        "id": "67680fc58c4c7311",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Pressure",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 780,
+        "wires": [
+            [
+                "1f9bcc8a91a9c650"
+            ]
+        ]
+    },
+    {
+        "id": "5cb82b4b12a12833",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "3e0b6598fd1203b0",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "°C",
+        "format": "{{value|number:2}}",
+        "min": "-10",
+        "max": "40",
+        "colors": [
+            "#0096ff",
+            "#00f900",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1070,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "4911ef9e2026c030",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Stretch",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 80,
+        "wires": [
+            [
+                "f69e19171b8f9a69"
+            ]
+        ]
+    },
+    {
+        "id": "f69e19171b8f9a69",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "ef983b97d325fda8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Stretch",
+        "label": "Unit",
+        "format": "{{value|number:2}}",
+        "min": "-10",
+        "max": "40",
+        "colors": [
+            "#0096ff",
+            "#00f900",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1000,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7e3bab9bb79fa9e2",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Stretch",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 140,
+        "wires": [
+            [
+                "3b5b07d7bbc2def0"
+            ]
+        ]
+    },
+    {
+        "id": "3b5b07d7bbc2def0",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "4ea517274771a3e9",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Stretch",
+        "label": "Unit",
+        "format": "{{value|number:2}}",
+        "min": "-10",
+        "max": "40",
+        "colors": [
+            "#0096ff",
+            "#00f900",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1000,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "20c0f2416e53a604",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Stretch",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 780,
+        "y": 200,
+        "wires": [
+            [
+                "95d16a80456ad194"
+            ]
+        ]
+    },
+    {
+        "id": "95d16a80456ad194",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "beb928088366b8f5",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Stretch",
+        "label": "Unit",
+        "format": "{{value|number:2}}",
+        "min": "-10",
+        "max": "40",
+        "colors": [
+            "#0096ff",
+            "#00f900",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1000,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "782b06fb.cc1df8",
+        "type": "comment",
+        "z": "eab2a9b4a454c754",
+        "name": "Auto Logger archiving",
+        "info": "Generate file name that are to be archived.\n\nIdea is that this generates a list of file names for let's say between current day-5 days to current day-10 days, so all files that are 5-10 days old will get archived. And this can be executed daily or weekly, and the interval allows some overlap (e.g. the program fails, Node-Red was down, etc.)\n\nInject node should contain a JSON:\n{    \n    \"start\": 20,    \n    \"end\": 10\n}\n\nThis will generate file names D-20 to D-10 days.\nStart should be greather than end!\n",
+        "x": 120,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "f14e2f71.1ad87",
+        "type": "function",
+        "z": "eab2a9b4a454c754",
+        "name": "Maplin Filename generator",
+        "func": "let output = [];\nfor (var i=msg.payload.end;i<msg.payload.start;i++) {\n    \n    // calculate the date\n    let now = new Date();\n    now.setTime(now.getTime() - 1000*60*60*24*i);\n    let yyyy = now.getFullYear();\n    let mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\n    let dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\n    let hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\n    let mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\n    let ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\n    \n    let newfile = { \"topic\": \"archive\", \"payload\": \"\"};\n    // Generate out file name pattern\n    newfile.fname = \"maplin_\"+ yyyy + mm + dd + \".csv\";\n    // Full filename with path \n    newfile.filename = \"/home/Admin/datalog/\"+ newfile.fname;\n    \n    // Shell script only needs the filename without the path\n    newfile.payload = newfile.fname;\n    output.push(newfile);\n\n}\n\nreturn [output];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "5ba61ce5.11d8a4"
+            ]
+        ]
+    },
+    {
+        "id": "b57ab78e.cf1658",
+        "type": "function",
+        "z": "eab2a9b4a454c754",
+        "name": "BME Station Filename generator",
+        "func": "let output = [];\nfor (var i=msg.payload.end;i<msg.payload.start;i++) {\n    \n    // calculate the date\n    let now = new Date();\n    now.setTime(now.getTime() - 1000*60*60*24*i);\n    let yyyy = now.getFullYear();\n    let mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\n    let dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\n    let hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\n    let mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\n    let ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\n    \n    let newfile = { \"topic\": \"archive\", \"payload\": \"\"};\n    // Generate out file name pattern\n    newfile.fname = \"BME_sensor_\"+ yyyy + mm + dd + \".csv\";\n    // Full filename with path \n    newfile.filename = \"/home/Admin/datalog/\"+ newfile.fname;\n    \n    // Shell script only needs the filename without the path\n    newfile.payload = newfile.fname;\n    output.push(newfile);\n\n}\n\nreturn [output];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 180,
+        "wires": [
+            [
+                "5ba61ce5.11d8a4"
+            ]
+        ]
+    },
+    {
+        "id": "5e47f3b4.7c779c",
+        "type": "inject",
+        "z": "eab2a9b4a454c754",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 18 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"start\":20,\"end\":10}",
+        "payloadType": "json",
+        "x": 110,
+        "y": 140,
+        "wires": [
+            [
+                "f14e2f71.1ad87",
+                "b57ab78e.cf1658"
+            ]
+        ]
+    },
+    {
+        "id": "ad87fee.c53d5",
+        "type": "exec",
+        "z": "eab2a9b4a454c754",
+        "command": "/home/Admin/log_upload.sh",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "File upload",
+        "x": 710,
+        "y": 120,
+        "wires": [
+            [],
+            [],
+            [
+                "5f0f09f4.a09208"
+            ]
+        ]
+    },
+    {
+        "id": "5f0f09f4.a09208",
+        "type": "switch",
+        "z": "eab2a9b4a454c754",
+        "name": "Return code",
+        "property": "payload.code",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 990,
+        "y": 220,
+        "wires": [
+            [],
+            [
+                "639dcab5.1028b4"
+            ]
+        ]
+    },
+    {
+        "id": "49210be0.0dbbe4",
+        "type": "exec",
+        "z": "eab2a9b4a454c754",
+        "command": "sudo rm ",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "File delete",
+        "x": 1130,
+        "y": 120,
+        "wires": [
+            [],
+            [],
+            [
+                "1fee1de5.695e32"
+            ]
+        ]
+    },
+    {
+        "id": "639dcab5.1028b4",
+        "type": "change",
+        "z": "eab2a9b4a454c754",
+        "name": "Get filename",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filename",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 950,
+        "y": 120,
+        "wires": [
+            [
+                "49210be0.0dbbe4"
+            ]
+        ]
+    },
+    {
+        "id": "1fee1de5.695e32",
+        "type": "switch",
+        "z": "eab2a9b4a454c754",
+        "name": "Return code",
+        "property": "payload.code",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "neq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 1350,
+        "y": 140,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5ba61ce5.11d8a4",
+        "type": "delay",
+        "z": "eab2a9b4a454c754",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "5",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 640,
+        "y": 320,
+        "wires": [
+            [
+                "ad87fee.c53d5"
+            ]
+        ]
+    },
+    {
+        "id": "9da5c02.66c844",
+        "type": "comment",
+        "z": "eab2a9b4a454c754",
+        "name": "log_upload.sh",
+        "info": "ftp -inv 192.168.1.x << EOF\n    user <username> <password>\n    binary\n    cd backup/logs\n    lcd /home/pi/datalog\n    put $1\nEOF",
+        "x": 690,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "f79c29b7.055068",
+        "type": "comment",
+        "z": "eab2a9b4a454c754",
+        "name": "Auto Logger",
+        "info": "",
+        "x": 130,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "4c8ae605.33be88",
+        "type": "function",
+        "z": "eab2a9b4a454c754",
+        "name": "Set data",
+        "func": "var now = new Date();\n\nmsg.payload = {\n    \"timestamp\" : now.getTime(),\n    \"temperature\" : msg.payload.temp.Type,\n    \"humidity\" : msg.payload.hum.Type,\n    \"pressure\" : msg.payload.pres.Type\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 220,
+        "y": 460,
+        "wires": [
+            [
+                "f46f569e.ff1a08"
+            ]
+        ]
+    },
+    {
+        "id": "f46f569e.ff1a08",
+        "type": "function",
+        "z": "eab2a9b4a454c754",
+        "name": "Filename generator",
+        "func": "// Get the current time and convert it to text\nvar now = new Date();\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\n\n// Generate out file name pattern\nmsg.fname = \"maplin_\"+ yyyy + mm + dd + \".csv\";\n// Full filename with path for the file node later\nmsg.filename = \"/home/Admin/datalog/\"+ msg.fname;\n\n// We save the current payload into a different place on the msg object\nmsg.filecontent = msg.payload;\n\n// We are passing the file name search pattern to fs node to tell us if the file exists or not\nmsg.payload = {\"pattern\":msg.fname};\n\nnode.status({fill:\"blue\",shape:\"ring\",text:msg.fname});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 580,
+        "wires": [
+            [
+                "fa6936f.7758dc8"
+            ]
+        ]
+    },
+    {
+        "id": "fa6936f.7758dc8",
+        "type": "fs-file-lister",
+        "z": "eab2a9b4a454c754",
+        "name": "",
+        "start": "/home/Admin/datalog/",
+        "pattern": "",
+        "folders": "*",
+        "hidden": true,
+        "lstype": "files",
+        "path": true,
+        "single": true,
+        "depth": 0,
+        "stat": true,
+        "showWarnings": false,
+        "x": 380,
+        "y": 580,
+        "wires": [
+            [
+                "a96494a5.b0f4c8",
+                "3db97537.b889ea"
+            ]
+        ]
+    },
+    {
+        "id": "a96494a5.b0f4c8",
+        "type": "debug",
+        "z": "eab2a9b4a454c754",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "3db97537.b889ea",
+        "type": "switch",
+        "z": "eab2a9b4a454c754",
+        "name": "",
+        "property": "$count(msg.payload)",
+        "propertyType": "jsonata",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 530,
+        "y": 580,
+        "wires": [
+            [
+                "3cb887e8.e533a8"
+            ],
+            [
+                "f3ba1c7a.54ef5"
+            ]
+        ]
+    },
+    {
+        "id": "fe6f74d5.674ec8",
+        "type": "csv",
+        "z": "eab2a9b4a454c754",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "all",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,temperature,humidity,pressure",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 870,
+        "y": 560,
+        "wires": [
+            [
+                "3a8ebdf3.772cc2"
+            ]
+        ]
+    },
+    {
+        "id": "3a8ebdf3.772cc2",
+        "type": "file",
+        "z": "eab2a9b4a454c754",
+        "name": "",
+        "filename": "filename",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1030,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f226a86d.9bdfb8",
+        "type": "csv",
+        "z": "eab2a9b4a454c754",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "none",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "timestamp,temperature,humidity,pressure",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": false,
+        "include_null_values": false,
+        "x": 870,
+        "y": 600,
+        "wires": [
+            [
+                "3a8ebdf3.772cc2"
+            ]
+        ]
+    },
+    {
+        "id": "3cb887e8.e533a8",
+        "type": "change",
+        "z": "eab2a9b4a454c754",
+        "name": "Get file content",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filecontent",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 560,
+        "wires": [
+            [
+                "fe6f74d5.674ec8"
+            ]
+        ]
+    },
+    {
+        "id": "f3ba1c7a.54ef5",
+        "type": "change",
+        "z": "eab2a9b4a454c754",
+        "name": "Get file content",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filecontent",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 600,
+        "wires": [
+            [
+                "f226a86d.9bdfb8"
+            ]
+        ]
     }
 ]
