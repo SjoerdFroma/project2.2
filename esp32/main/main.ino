@@ -56,11 +56,13 @@ void udp_json_task(void *pvParameters)
 
       stifness = floatMap(analogValue, 0, 4095, 0, 100);
       cJSON *root = cJSON_CreateObject();
+
       cJSON_AddNumberToObject(root, "node200", node);
       cJSON_AddNumberToObject(root, "temp200", temperature);
       cJSON_AddNumberToObject(root, "hum200", humidity);
       cJSON_AddNumberToObject(root, "pres200", pressure);
       cJSON_AddNumberToObject(root, "stretch200", stifness);
+
       char *json_string = cJSON_PrintUnformatted(root);
 
       udp.beginPacket(NODE_RED_IP, NODE_RED_PORT);
