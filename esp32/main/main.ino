@@ -8,7 +8,7 @@
 #include <Adafruit_Sensor.h>
 
 
-#define NODE_RED_IP "192.168.137.1"
+#define NODE_RED_IP "192.168.137.16"
 #define NODE_RED_PORT 49152
 
 Adafruit_BME280 bme;
@@ -51,16 +51,16 @@ void udp_json_task(void *pvParameters)
       temperature = bme.readTemperature();
       humidity = bme.readHumidity();
       pressure = bme.readPressure() / 100;
-      int node = 1;
+      int node = 2;
       analogValue = analogRead(32);
 
       stifness = floatMap(analogValue, 0, 4095, 0, 100);
       cJSON *root = cJSON_CreateObject();
-      cJSON_AddNumberToObject(root, "node", node);
-      cJSON_AddNumberToObject(root, "temp", temperature);
-      cJSON_AddNumberToObject(root, "hum", humidity);
-      cJSON_AddNumberToObject(root, "pres", pressure);
-      cJSON_AddNumberToObject(root, "stretch", stifness);
+      cJSON_AddNumberToObject(root, "node200", node);
+      cJSON_AddNumberToObject(root, "temp200", temperature);
+      cJSON_AddNumberToObject(root, "hum200", humidity);
+      cJSON_AddNumberToObject(root, "pres200", pressure);
+      cJSON_AddNumberToObject(root, "stretch200", stifness);
       char *json_string = cJSON_PrintUnformatted(root);
 
       udp.beginPacket(NODE_RED_IP, NODE_RED_PORT);
