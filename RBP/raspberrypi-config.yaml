@@ -5,7 +5,28 @@
   become: true
   gather_facts: no
   remote_user: Admin
+  vars:
+    mysql_root_password: ""
+    nodered_instance: ""
+    nodered_port: ""
+    # To run this below you have to do the following command:
+    # ansible-playbook raspberrypi-config.yaml --extra-vars "nodered_instance=nodered1 nodered_port=1900 admin_password=mypassword"
+    # The same for mysql
+    auth_text: |
+      adminAuth: {
+        type: "credentials",
+        users: [{
+            username: "Admin",
+            password: "replace_bcrypt_password_here",
+            permissions: "*"
+        }]
+      },
+      /**
   tasks:
+
+    - name: Ansible shell module multiple commands
+      shell: 'curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -'
+
     - name: Install packages
       apt:
         update_cache: yes
@@ -18,6 +39,13 @@
           - vim
           - nodejs 
           - net-tools  
+          - mysql
+          - phpmyadmin
+
+    - name: Install "alternate-node-red-installer" node.js package globally.
+      community.general.npm:
+        name: alternate-node-red-installer
+        global: yes      
 
     - name: Install PM2
       npm:
@@ -67,3 +95,159 @@
         content: |
           ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMB81MIQJvMtnolJMUJ5i6hQilarJDQ5gY907zHxUC4oZvM2qoM0s2K3GGbUkW82OYs7aGKGdNg3XJTGorf3CdW97sEHMqvooJekXK1UEwuVD2DrxCoNDBxu2Gb2CZVG4G5oX8uXgeOHk2tRl+nAd7JqRJxnIiZ+YhWooj6eYqQjWJL/F+ix9GmQV4pxO+83g7FrhwFocqrmwn9CUbBSZuxvr6Dz+sH6nopTdFAtzF6ReCWLesid+vEvsLZBiszQLNubHvIRtyCYabH2tZFxbt19XEQHIucTpmIGP6hmjFcldA550VkZPIeGrw0iWGU32fb4RZ40q9S9zr1FoKeBZ
       tags: [ ssh ]
+
+    - name: fail when the 'nodered_instance' variable is undefined
+      fail:
+        msg: the 'nodered_instance' variable is undefined
+      when: nodered_instance is undefined
+    - name: fail when the 'nodered_instance' variable is empty
+      fail:
+        msg: the 'nodered_instance' variable is empty
+      when: nodered_instance | length == 0
+  
+    - name: fail when the 'nodered_port' variable is undefined
+      fail:
+        msg: the 'nodered_port' variable is undefined
+      when: nodered_port is undefined
+  
+    - name: fail when the 'nodered_port' variable is empty
+      fail:
+        msg: the 'nodered_port' variable is empty
+      when: nodered_port | length == 0
+  
+    - name: Check if something is running on the port
+      wait_for:
+        port: '{{ nodered_port }}'
+        timeout: 10
+        state: stopped
+        msg: "Port {{ nodered_port }} is being used, choose a differnt port"
+      register: service_status
+  
+    - name: Install node red
+      shell: 'alternate-node-red-installer -f /home/nodered/{{  nodered_instance  }}'
+    - name: Copy systemd template
+      ansible.builtin.copy:
+        src: "/home/nodered/{{  nodered_instance  }}/system/node-red.service"
+        dest: "/home/nodered/{{  nodered_instance  }}/system/node-red-{{  nodered_instance  }}.service"
+        remote_src: yes
+        owner: nodered
+        group: nodered
+        mode: '0644'
+    - name: set user to nodered
+      ini_file: "dest=/home/nodered/{{  nodered_instance  }}/system/node-red-{{  nodered_instance  }}.service section=Service option=User value=nodered"
+    - name: set group to nodered
+      ini_file: "dest=/home/nodered/{{  nodered_instance  }}/system/node-red-{{  nodered_instance  }}.service section=Service option=Group value=nodered"
+  
+    - name: fix working dir
+      ini_file: "dest=/home/nodered/{{  nodered_instance  }}/system/node-red-{{  nodered_instance  }}.service section=Service option=WorkingDirectory value=/home/nodered/{{  nodered_instance  }}"
+  
+    - name: fix working EnvironmentFile
+      ini_file: "dest=/home/nodered/{{  nodered_instance  }}/system/node-red-{{  nodered_instance  }}.service section=Service option=EnvironmentFile value=/home/nodered/{{  nodered_instance  }}/data/envfile.ini"
+  
+    - name: Change the port in the envfile
+      copy:
+        dest: "/home/nodered/{{  nodered_instance  }}/data/envfile.ini"
+        content: "PORT={{ nodered_port }}"
+  
+    - name: Recursively change ownership of a directory
+      ansible.builtin.file:
+        path: /home/nodered/{{  nodered_instance  }}
+        state: directory
+        recurse: yes
+        owner: nodered
+        group: nodered
+  
+    - name: Replace projects enabled with true
+      replace:
+        path: "/home/nodered/{{  nodered_instance  }}/data/settings.js"
+        after: 'projects: {'
+        before: 'workflow: {'
+        regexp: '\benabled: false\b'
+        replace: 'enabled: true'
+  
+    - block:
+  
+      - name: add in auth_text to enable security
+        replace:
+          path: "/home/nodered/{{  nodered_instance  }}/data/settings.js"
+          regexp: '^.*(To password protect the Node-RED editor and admin API, the following).*$([\s\S]*)^.*(The following property can be used to enable HTTPS).*$'
+          replace: '{{ auth_text }}'
+  
+      - name: generate password
+        shell: 'node -e "console.log(require(''bcryptjs'').hashSync(process.argv[1], 8));" {{admin_password}}'
+        register: bcrypt_password
+        args:
+          chdir: '/home/nodered/{{nodered_instance}}'
+  
+      - name: Replace password in settings file
+        replace:
+          path: "/home/nodered/{{  nodered_instance  }}/data/settings.js"
+          after: 'adminAuth: {'
+          before: 'permissions:'
+          regexp: '\breplace_bcrypt_password_here\b'
+          replace: '{{ bcrypt_password.stdout }}'
+  
+      when: admin_password is defined
+  
+    - name: Link to multi-user.target.wants
+      shell: 'sudo /bin/systemctl enable /home/nodered/{{  nodered_instance  }}/system/node-red-{{  nodered_instance  }}.service'
+  
+    - name: Restart nodered instance
+      ansible.builtin.systemd:
+        state: restarted
+        daemon_reload: yes
+        name: "node-red-{{ nodered_instance  }}"
+
+    - name: start up the mysql service  
+      shell: "service mysql start"  
+
+    - name: ensure mysql is enabled to run on startup  
+      service: name=mysql state=started enabled=true
+
+    - name: update mysql root password for all root accounts  
+      mysql_user:  
+        name: root  
+        host: "{{ item }}"  
+        password: "{{ mysql_root_password }}"  
+        login_user: root  
+        login_password: "{{ mysql_root_password }}"  
+        check_implicit_admin: yes  
+        priv: "*.*:ALL,GRANT"  
+      with_items:  
+      - "{{ ansible_hostname }}"  
+      - 127.0.0.1  
+      - ::1  
+      - localhost  
+    # This is for ceating the stretch_data table with the required colums
+    - name: create a new database  
+      mysql_db: name=flexdata state=present login_user=root login_password="{{ mysql_root_password }}"  
+    - name: add data to database  
+      copy: src=dump.sql dest=/tmp/dump.sql  
+    - name: insert data into database  
+      mysql_db: name=flexdata state=import target=/tmp/dump.sql login_user=root login_password="{{ mysql_root_password }}"  
+
+    - name: copy root configurations file
+      template: src=my.cnf dest=/root/.my.cnf owner=root mode=0600  
+
+    - name: debconf for pma
+      debconf: name=phpmyadmin question='phpmyadmin/dbconfig-install' value='true' vtype='boolean'
+
+    - name: debconf for pma
+      debconf: name=phpmyadmin question='phpmyadmin/app-password-confirm' value='{{mysql_root_pass}}' vtype='password'
+
+    - name: debconf for pma
+      debconf: name=phpmyadmin question='phpmyadmin/mysql/admin-pass' value='{{mysql_root_pass}}' vtype='password'
+
+    - name: debconf for pma
+      debconf: name=phpmyadmin question='phpmyadmin/mysql/app-pass' value='{{mysql_root_pass}}' vtype='password'
+
+    - name: debconf for pma
+      debconf: name=phpmyadmin question='phpmyadmin/reconfigure-webserver' value='' vtype='multiselect'
+
+    - name: install pma
+      apt: pkg=phpmyadmin state=present
+
+    - name: configure site
+      file: path=/var/www/phpmyadmin src=/usr/share/phpmyadmin state=link
+
+      
