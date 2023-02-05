@@ -10,7 +10,7 @@
 
 
 
-#define NODE_RED_IP "192.168.137.1" //Ip adres van node red dashboard
+#define NODE_RED_IP "192.168.137.213" //Ip adres van node red dashboard
 #define NODE_RED_PORT 49152 // UDP port waarop node red luistert.
 #define WIFI_TIMEOUT_MS 20000 // 20 second WiFi connection timeout 20 seconden 
 #define WIFI_RECOVER_TIME_MS 30000 // Wait 30 seconds after a failed connection attempt
@@ -42,11 +42,11 @@ void get_values(void *pvParameters) {
 
     //Zet de sensor data in een JSON object en zet het json object om naar een string.
     cJSON *root = cJSON_CreateObject();
-    cJSON_AddNumberToObject(root, "node", node);
-    cJSON_AddNumberToObject(root, "temp", temperature);
-    cJSON_AddNumberToObject(root, "hum", humidity);
-    cJSON_AddNumberToObject(root, "pres", pressure);
-    cJSON_AddNumberToObject(root, "stretch", stifness);
+    cJSON_AddNumberToObject(root, "node100", node);
+    cJSON_AddNumberToObject(root, "temp100", temperature);
+    cJSON_AddNumberToObject(root, "hum100", humidity);
+    cJSON_AddNumberToObject(root, "pres100", pressure);
+    cJSON_AddNumberToObject(root, "stretch100", stifness);
     char *json_string = cJSON_PrintUnformatted(root);
 
     //variabele om een queue item in te plaatsen als deze vol is.
