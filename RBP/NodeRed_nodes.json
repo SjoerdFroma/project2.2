@@ -977,6 +977,7 @@
         "wires": [
             [
                 "1f95e6c61745c78b",
+                "16113b92046df938",
                 "eb7d5836a1f3e728"
             ]
         ]
@@ -1021,13 +1022,13 @@
         "type": "function",
         "z": "f6f2187d.f17ca8",
         "name": "Get mysql data node1",
-        "func": "msg.topic = \"SELECT AVG(stretch), MIN(stretch), MAX(stretch) FROM stretch_data WHERE node_id = '1'\"\nreturn msg;",
+        "func": "msg.topic = \"SELECT AVG(stretch), MIN(stretch), MAX(stretch), MAX(id) FROM stretch_data WHERE node_id = '1'\"\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 260,
+        "x": 280,
         "y": 80,
         "wires": [
             [
@@ -1076,11 +1077,11 @@
         "repeat": "1",
         "crontab": "",
         "once": true,
-        "onceDelay": 0.1,
+        "onceDelay": "0.78",
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 70,
+        "x": 90,
         "y": 80,
         "wires": [
             [
@@ -1224,5 +1225,49 @@
                 "b8764d9759ad2242"
             ]
         ]
+    },
+    {
+        "id": "16113b92046df938",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "Stretch counter",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].MAX(id)",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 160,
+        "wires": [
+            [
+                "809062c0620a3033"
+            ]
+        ]
+    },
+    {
+        "id": "809062c0620a3033",
+        "type": "ui_text",
+        "z": "f6f2187d.f17ca8",
+        "group": "ef983b97d325fda8",
+        "order": 2,
+        "width": "6",
+        "height": "4",
+        "name": "",
+        "label": "Stretch Counter :",
+        "format": "{{msg.payload}}  stretches",
+        "layout": "col-center",
+        "className": "",
+        "x": 810,
+        "y": 160,
+        "wires": []
     }
 ]
