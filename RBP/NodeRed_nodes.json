@@ -9,7 +9,7 @@
     {
         "id": "e562a4a.39a9e58",
         "type": "ui_tab",
-        "name": "ESP32 Sensor Data",
+        "name": "Weather Sensor Data",
         "icon": "dashboard",
         "order": 1,
         "disabled": false,
@@ -116,7 +116,7 @@
     {
         "id": "f00630a9f4787083",
         "type": "ui_group",
-        "name": "ESP32 node (Jacket1)",
+        "name": "Jacket1",
         "tab": "e562a4a.39a9e58",
         "order": 1,
         "disp": true,
@@ -127,7 +127,7 @@
     {
         "id": "ec87f89e0f9cd52f",
         "type": "ui_group",
-        "name": "ESP32 node (Jacket2)",
+        "name": "Jacket2",
         "tab": "e562a4a.39a9e58",
         "order": 2,
         "disp": true,
@@ -138,7 +138,7 @@
     {
         "id": "3e0b6598fd1203b0",
         "type": "ui_group",
-        "name": "ESP32 node (Jacket3)",
+        "name": "Jacket3",
         "tab": "e562a4a.39a9e58",
         "order": 3,
         "disp": true,
@@ -149,7 +149,7 @@
     {
         "id": "28652acf750469cf",
         "type": "ui_tab",
-        "name": "ESP32 Stretch Data",
+        "name": "Stretch Sensor Data",
         "icon": "dashboard",
         "order": 2,
         "disabled": false,
@@ -158,7 +158,7 @@
     {
         "id": "ef983b97d325fda8",
         "type": "ui_group",
-        "name": "ESP32 node (Jacket1)",
+        "name": "Jacket1",
         "tab": "28652acf750469cf",
         "order": 1,
         "disp": true,
@@ -169,7 +169,7 @@
     {
         "id": "4ea517274771a3e9",
         "type": "ui_group",
-        "name": "ESP32 node (Jacket2)",
+        "name": "Jacket2",
         "tab": "28652acf750469cf",
         "order": 2,
         "disp": true,
@@ -180,7 +180,7 @@
     {
         "id": "beb928088366b8f5",
         "type": "ui_group",
-        "name": "ESP32 node (Jacket3)",
+        "name": "Jacket3",
         "tab": "28652acf750469cf",
         "order": 3,
         "disp": true,
@@ -197,6 +197,48 @@
         "db": "flexdata",
         "tz": "",
         "charset": "UTF8"
+    },
+    {
+        "id": "c55aa5ac33f9c9e6",
+        "type": "ui_tab",
+        "name": "All data vieuw",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "dc54139c87b113c2",
+        "type": "ui_group",
+        "name": "Jacket1",
+        "tab": "c55aa5ac33f9c9e6",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "abf2ab759c767eb3",
+        "type": "ui_group",
+        "name": "Jacket2 average",
+        "tab": "c55aa5ac33f9c9e6",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d5a9facbdbaed5d6",
+        "type": "ui_group",
+        "name": "Jacket3 average",
+        "tab": "c55aa5ac33f9c9e6",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "20e88339df9beb70",
@@ -778,7 +820,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 780,
+        "x": 960,
         "y": 80,
         "wires": [
             [
@@ -810,7 +852,7 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 1000,
+        "x": 1120,
         "y": 80,
         "wires": []
     },
@@ -833,7 +875,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 780,
+        "x": 960,
         "y": 140,
         "wires": [
             [
@@ -865,7 +907,7 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 1000,
+        "x": 1120,
         "y": 140,
         "wires": []
     },
@@ -888,7 +930,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 780,
+        "x": 960,
         "y": 200,
         "wires": [
             [
@@ -920,7 +962,7 @@
         "seg2": "",
         "diff": false,
         "className": "",
-        "x": 1000,
+        "x": 1120,
         "y": 200,
         "wires": []
     },
@@ -934,7 +976,8 @@
         "y": 160,
         "wires": [
             [
-                "1f95e6c61745c78b"
+                "1f95e6c61745c78b",
+                "eb7d5836a1f3e728"
             ]
         ]
     },
@@ -970,6 +1013,215 @@
         "wires": [
             [
                 "efc349895fb089ba"
+            ]
+        ]
+    },
+    {
+        "id": "117a9b742994aaa7",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "Get mysql data node1",
+        "func": "msg.topic = \"SELECT AVG(stretch), MIN(stretch), MAX(stretch) FROM stretch_data WHERE node_id = '1'\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 80,
+        "wires": [
+            [
+                "efc349895fb089ba"
+            ]
+        ]
+    },
+    {
+        "id": "5607399675a32636",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "ef983b97d325fda8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Average stretch",
+        "label": "%",
+        "format": "{{value|number:2}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 740,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "782432ec4efba45b",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 70,
+        "y": 80,
+        "wires": [
+            [
+                "117a9b742994aaa7"
+            ]
+        ]
+    },
+    {
+        "id": "eb7d5836a1f3e728",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "AVG stretch",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].AVG(stretch)",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 40,
+        "wires": [
+            [
+                "5607399675a32636"
+            ]
+        ]
+    },
+    {
+        "id": "98b9deae9cdd7f17",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "4ea517274771a3e9",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Average stretch",
+        "label": "%",
+        "format": "{{value|number:2}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 740,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "b8764d9759ad2242",
+        "type": "ui_gauge",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "group": "beb928088366b8f5",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Average stretch",
+        "label": "%",
+        "format": "{{value|number:2}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 740,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "53ebaa7c7b375d31",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "MIN stretch",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].MIN(stretch)",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 80,
+        "wires": [
+            [
+                "98b9deae9cdd7f17"
+            ]
+        ]
+    },
+    {
+        "id": "189bd82b4f777d1c",
+        "type": "change",
+        "z": "f6f2187d.f17ca8",
+        "name": "MAX stretch",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[0].MAX(stretch)",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 120,
+        "wires": [
+            [
+                "b8764d9759ad2242"
             ]
         ]
     }
