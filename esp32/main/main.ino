@@ -10,7 +10,7 @@
 
 
 
-#define NODE_RED_IP "192.168.137.213" //Ip adres van node red dashboard
+#define NODE_RED_IP "192.168.137.23" //Ip adres van node red dashboard
 #define NODE_RED_PORT 49152 // UDP port waarop node red luistert.
 #define WIFI_TIMEOUT_MS 20000 // 20 second WiFi connection timeout 20 seconden 
 #define WIFI_RECOVER_TIME_MS 30000 // Wait 30 seconds after a failed connection attempt
